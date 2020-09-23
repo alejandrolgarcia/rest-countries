@@ -11,14 +11,42 @@ class CountryDetail extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Country Detail'),
+        title: Text(country.name),
       ),
-      body: Center(
-        child: Container(
-          padding: EdgeInsets.all(20.0),
-          child: ClipRRect(
-            child: SvgPicture.network( country.flag)
-          ),
+
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+
+            Hero(
+              tag: country.name,
+              child: ClipRRect(
+                child: SvgPicture.network(
+                  country.flag,
+                  height: 250.0,
+                  fit: BoxFit.cover,
+                ), 
+              ),
+            ),
+            
+            SizedBox(height: 10.0),
+            Text('Capital: ${country.capital}', style: TextStyle(fontSize: 20.0)),
+
+            SizedBox(height: 10.0),
+            Text('Nombre nativo: ${country.nativeName}', style: TextStyle(fontSize: 20.0)),
+
+            SizedBox(height: 10.0),
+            Text('Población: ${country.population}', style: TextStyle(fontSize: 20.0)),
+
+            SizedBox(height: 10.0),
+            Text('Continente: ${country.region}', style: TextStyle(fontSize: 20.0)),
+
+            SizedBox(height: 10.0),
+            Text('Sub región: ${country.subregion}', style: TextStyle(fontSize: 20.0)),
+
+          ]
         )
       ),
     );

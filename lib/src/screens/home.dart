@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:rest_countries/src/api/countries.api.dart';
 import 'package:rest_countries/src/models/country.model.dart';
@@ -31,18 +31,24 @@ class Home extends StatelessWidget {
                         children: [
 
                           ListTile(
-                            leading: Container(
-                              width: 60.0,
-                              height: 40.0,
-                              child: ClipRRect(
-                                child: SvgPicture.network( result.getFlag(),
-                                height: 60.0,
-                                width: 40.0,
-                                fit: BoxFit.contain,
-                                placeholderBuilder: (BuildContext context) => CircularProgressIndicator()
-                                )
-                              ),
-                            ),
+                            // leading: Hero(
+                            //   tag: result.name,
+                            //   child: Container(
+                            //     height: 30.0,
+                            //     width: 50.0,
+                            //     child: ClipRRect(
+                            //       child: SvgPicture.network( result.getFlag(),
+                            //       height: 30.0,
+                            //       width: 50.0,
+                            //       fit: BoxFit.contain,
+                            //       placeholderBuilder: (BuildContext context) => Container(
+                            //         padding: EdgeInsets.all(30.0),
+                            //         child: CircularProgressIndicator()
+                            //         )
+                            //       )
+                            //     ),
+                            //   ),
+                            // ),
                             title: Text(result.name),
                             subtitle: Text(result.capital),
                             trailing: Icon(
