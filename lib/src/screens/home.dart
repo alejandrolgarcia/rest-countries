@@ -17,64 +17,100 @@ class Home extends StatelessWidget {
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10.0),
-          child: FutureBuilder(
-            future: _countries.getCountries(),
-            builder: (BuildContext context, AsyncSnapshot<Result> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.active:
-                case ConnectionState.done:
-
-                  return ListView(
-                    children: snapshot.data.results.map<Widget>(( result ) {
-
-                      return Column(
-                        children: [
-
-                          ListTile(
-                            // leading: Hero(
-                            //   tag: result.name,
-                            //   child: Container(
-                            //     height: 30.0,
-                            //     width: 50.0,
-                            //     child: ClipRRect(
-                            //       child: SvgPicture.network( result.getFlag(),
-                            //       height: 30.0,
-                            //       width: 50.0,
-                            //       fit: BoxFit.contain,
-                            //       placeholderBuilder: (BuildContext context) => Container(
-                            //         padding: EdgeInsets.all(30.0),
-                            //         child: CircularProgressIndicator()
-                            //         )
-                            //       )
-                            //     ),
-                            //   ),
-                            // ),
-                            title: Text(result.name),
-                            subtitle: Text(result.capital),
-                            trailing: Icon(
-                              Icons.arrow_forward_ios
-                            ),
-                            onTap: () => Navigator.pushNamed(context, 'detail', arguments: result),
-                          ),
-                          Divider()
-                          
-                        ],
-                      );
-                    }).toList(),
-                  );
-                  
-                  break;
-                default:
-                  return Container(
-                    height: 500.0,
-                    child: Center(child: CircularProgressIndicator())
-                  ); 
-                  break;
-              }
-            },
+          child: ListView(
+            children: <Widget>[
+              Container(padding: EdgeInsets.all(10.0),child: Text('EU (European Union)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('EFTA (European Free Trade Association)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('CARICOM (Caribbean Community)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('PA (Pacific Alliance)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('AU (African Union)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('USAN (Union of South American Nations)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('EEU (Eurasian Economic Union)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('AL (Arab League)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('ASEAN (Association of Southeast Asian Nations)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('CAIS (Central American Integration System)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('CEFTA (Central European Free Trade Agreement)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('NAFTA (North American Free Trade Agreement)')),
+              buildBloc(context, 'eu'),
+              Container(padding: EdgeInsets.all(10.0),child: Text('SAARC (South Asian Association for Regional Cooperation)')),
+              buildBloc(context, 'eu'),
+            ],
           ),
         ),
       )
+    );
+  }
+
+  FutureBuilder<Result> buildBloc(BuildContext context, String bloc) {
+    return FutureBuilder(
+      future: _countries.getRegionalBloc(bloc),
+      builder: (BuildContext context, AsyncSnapshot<Result> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+          case ConnectionState.done:
+
+            return Column(
+              children: snapshot.data.results.map<Widget>(( result ) {
+                return buildColumn(result, context);
+              }).toList(),
+            );
+            
+            break;
+          default:
+            return Container(
+              height: 500.0,
+              child: Center(child: CircularProgressIndicator())
+            ); 
+            break;
+        }
+      },
+    );
+  }
+
+  Column buildColumn(Country result, BuildContext context) {
+    return Column(
+      children: [
+
+        ListTile(
+          // leading: Hero(
+          //   tag: result.name,
+          //   child: Container(
+          //     height: 30.0,
+          //     width: 50.0,
+          //     child: ClipRRect(
+          //       child: SvgPicture.network( result.getFlag(),
+          //       height: 30.0,
+          //       width: 50.0,
+          //       fit: BoxFit.contain,
+          //       placeholderBuilder: (BuildContext context) => Container(
+          //         padding: EdgeInsets.all(30.0),
+          //         child: CircularProgressIndicator()
+          //         )
+          //       )
+          //     ),
+          //   ),
+          // ),
+          title: Text(result.name),
+          subtitle: Text(result.capital),
+          trailing: Icon(
+            Icons.arrow_forward_ios
+          ),
+          onTap: () => Navigator.pushNamed(context, 'detail', arguments: result),
+        ),
+        Divider()
+        
+      ],
     );
   }
 }
