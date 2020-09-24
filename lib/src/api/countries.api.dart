@@ -16,9 +16,9 @@ class CountriesApi {
       : throw Exception('Error al conectar con REST Countries');
   }
 
-  Future<Result> getRegionalBloc(String bloc) async{
+  Future<Result> getCountriesByRegion(String region) async{
 
-    final Response response = await _client.get('https://restcountries.eu/rest/v2/regionalbloc/$bloc');
+    final Response response = await _client.get('https://restcountries.eu/rest/v2/region/$region');
 
     return response.statusCode == 200
       ? Result.fromJsonList(json.decode(response.body))

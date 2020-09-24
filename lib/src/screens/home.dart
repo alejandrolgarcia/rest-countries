@@ -15,36 +15,21 @@ class Home extends StatelessWidget {
         title: Text('REST Countries'),
       ),
       body: SafeArea(
+        bottom: false,
         child: Container(
           padding: EdgeInsets.all(10.0),
           child: ListView(
             children: <Widget>[
-              Container(padding: EdgeInsets.all(10.0),child: Text('EU (European Union)')),
-              buildBloc(context, 'eu'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('EFTA (European Free Trade Association)')),
-              buildBloc(context, 'efta'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('CARICOM (Caribbean Community)')),
-              buildBloc(context, 'caricom'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('PA (Pacific Alliance)')),
-              buildBloc(context, 'pa'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('AU (African Union)')),
-              buildBloc(context, 'au'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('USAN (Union of South American Nations)')),
-              buildBloc(context, 'usan'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('EEU (Eurasian Economic Union)')),
-              buildBloc(context, 'eeu'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('AL (Arab League)')),
-              buildBloc(context, 'al'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('ASEAN (Association of Southeast Asian Nations)')),
-              buildBloc(context, 'asean'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('CAIS (Central American Integration System)')),
-              buildBloc(context, 'cais'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('CEFTA (Central European Free Trade Agreement)')),
-              buildBloc(context, 'cefta'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('NAFTA (North American Free Trade Agreement)')),
-              buildBloc(context, 'nafta'),
-              Container(padding: EdgeInsets.all(10.0),child: Text('SAARC (South Asian Association for Regional Cooperation)')),
-              buildBloc(context, 'saarc'),
+              _customText(context, 'Africa'),
+              _buildCountries(context, 'africa'),
+              _customText(context, 'Americas'),
+              _buildCountries(context, 'americas'),
+              _customText(context, 'Asia'),
+              _buildCountries(context, 'asia'),
+              _customText(context, 'Europe'),
+              _buildCountries(context, 'europe'),
+              _customText(context, 'Oceania'),
+              _buildCountries(context, 'oceania'),
             ],
           ),
         ),
@@ -52,9 +37,19 @@ class Home extends StatelessWidget {
     );
   }
 
-  FutureBuilder<Result> buildBloc(BuildContext context, String bloc) {
+  Widget _customText(BuildContext context, String text) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.headline6,
+      ),
+    );
+  }
+
+  Widget _buildCountries(BuildContext context, String region) {
     return FutureBuilder(
-      future: _countries.getRegionalBloc(bloc),
+      future: _countries.getCountriesByRegion(region),
       builder: (BuildContext context, AsyncSnapshot<Result> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.active:
@@ -62,11 +57,11 @@ class Home extends StatelessWidget {
 
             return Column(
               children: snapshot.data.results.map<Widget>(( result ) {
-                return buildColumn(result, context);
+                return _buildListTile(result, context);
               }).toList(),
             );
-            
             break;
+
           default:
             return Container(
               height: 500.0,
@@ -78,7 +73,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Column buildColumn(Country result, BuildContext context) {
+  Widget _buildListTile(Country result, BuildContext context) {
     return Column(
       children: [
 
